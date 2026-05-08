@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Header from './components/Header';
 import Card from './components/Card';
 import GameOverlay from './components/GameOverlay';
 import './index.css';
@@ -63,21 +64,20 @@ function App() {
 
   return (
     <div className='app'>
-      <h1>Uma Musume Memory Card</h1>
-      <p>Status: {gameStatus} | Score: {currentScore} | Best: {bestScore}</p>
+      <Header currentScore={currentScore} bestScore={bestScore} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
         {characters.map((character) => (
           <Card key={character.id} character={character} onClick={handleCardClick} />
         ))}
-        {gameStatus !== 'playing' && (
-          <GameOverlay
-            gameStatus={gameStatus}
-            currentScore={currentScore}
-            bestScore={bestScore}
-            onReset={handleReset}
-          />
-        )}
       </div>
+      {gameStatus !== 'playing' && (
+        <GameOverlay
+          gameStatus={gameStatus}
+          currentScore={currentScore}
+          bestScore={bestScore}
+          onReset={handleReset}
+        />
+      )}
     </div>
   );
 }
