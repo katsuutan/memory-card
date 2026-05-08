@@ -1,0 +1,53 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.overlay-win {
+  background-color: rgba(39, 124, 76, 0.85);
+}
+
+.overlay-lose {
+  background-color: rgba(29, 38, 84, 0.85);
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem;
+  border-radius: 16px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #1a2332;
+}
+
+.overlay-content h2 {
+  font-size: 2.5rem;
+  color: #1a2332;
+}
+
+.overlay-content p {
+  font-size: 1rem;
+  color: #3a4a5c;
+}
+
+.overlay-content button {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: #4a9eff;
+  color: white;
+}

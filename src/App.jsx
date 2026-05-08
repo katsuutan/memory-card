@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from './components/Card';
+import GameOverlay from './components/GameOverlay';
 import './index.css';
 
 const CHARACTER_IDS = [4536, 5485, 4879, 5360, 5191, 7426, 7520, 5100, 5179, 5574, 4891, 4915];
@@ -26,13 +27,56 @@ function App() {
     fetchCharacters();
   }, []);
 
+  const handleCardClick = (id) => {
+    if (clickedIds.includes(id)) {
+      setGameStatus('lost');
+    } else {
+      // Adds id into the array of clickedIds
+      setClickedIds([...clickedIds, id]);
+
+      // Update Current Scores
+      setCurrentScore(currentScore + 1);
+
+      // Checks if score hit 12 (max points) to trigger the won state.
+      if (currentScore + 1 === 12) { 
+        setGameStatus('won');
+      }
+
+      // Updates best score if current score + 1 exceeds it.
+      if (currentScore + 1 > bestScore) {
+        setBestScore(bestScore + 1);
+      }
+      
+      // Shuffles
+      setIsShuffling(true);
+      setCharacters((prev) => [...prev].sort(() => Math.random() - 0.5));
+      setTimeout(() => setIsShuffling(false), 500);
+    }
+  };
+
+  const handleReset = () => {
+    setClickedIds([]);
+    setCurrentScore(0);
+    setGameStatus('playing');
+    setCharacters((prev) => [...prev].sort(() => Math.random() - 0.5));
+  };
+
   return (
     <div className='app'>
       <h1>Uma Musume Memory Card</h1>
+      <p>Status: {gameStatus} | Score: {currentScore} | Best: {bestScore}</p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
         {characters.map((character) => (
-          <Card key={character.id} character={character} onClick={(id) => console.log(id)} />
+          <Card key={character.id} character={character} onClick={handleCardClick} />
         ))}
+        {gameStatus !== 'playing' && (
+          <GameOverlay
+            gameStatus={gameStatus}
+            currentScore={currentScore}
+            bestScore={bestScore}
+            onReset={handleReset}
+          />
+        )}
       </div>
     </div>
   );
