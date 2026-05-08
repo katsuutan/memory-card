@@ -1,9 +1,9 @@
 import Card from './Card';
 import '../styles/GameBoard.css';
 
-function GameBoard({ characters, onCardClick, isShuffling }) {
+function GameBoard({ characters, onCardClick, isShuffling, isWrong }) {
   return (
-    <div className={`game-board ${isShuffling ? 'shuffling' : ''}`}>
+    <div className={`game-board ${isShuffling ? 'shuffling' : ''} ${isWrong ? 'wrong' : ''}`}>
       {characters.map((character) => (
         <Card
           key={character.id}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import GameBoard from './components/GameBoard';
-import Card from './components/Card';
 import GameOverlay from './components/GameOverlay';
 import './index.css';
 
@@ -14,6 +13,7 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [gameStatus, setGameStatus] = useState('playing');
   const [isShuffling, setIsShuffling] = useState(false);
+  const [isWrong, setIsWrong] = useState(false);
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -31,7 +31,11 @@ function App() {
 
   const handleCardClick = (id) => {
     if (clickedIds.includes(id)) {
-      setGameStatus('lost');
+      setIsWrong(true);
+      setTimeout(() => {
+        setIsWrong(false);
+        setGameStatus('lost');
+      }, 600);
     } else {
       // Adds id into the array of clickedIds
       setClickedIds([...clickedIds, id]);
@@ -70,6 +74,7 @@ function App() {
         characters={characters}
         onCardClick={handleCardClick}
         isShuffling={isShuffling}
+        isWrong={isWrong}
       />
       {gameStatus !== 'playing' && (
         <GameOverlay
