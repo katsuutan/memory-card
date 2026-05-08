@@ -18,7 +18,7 @@ A memory card game featuring characters from Uma Musume: Pretty Derby. Test your
 - Responsive layout for desktop, tablet, and mobile
 
 ## Live Demo
-[View on Vercel](your-vercel-link-here)
+[View on Vercel](uma-memory-card.vercel.app)
 
 ## What I Learned
 - Fetching data from an external API using useEffect
