@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
+import GameBoard from './components/GameBoard';
 import Card from './components/Card';
 import GameOverlay from './components/GameOverlay';
 import './index.css';
@@ -65,11 +66,11 @@ function App() {
   return (
     <div className='app'>
       <Header currentScore={currentScore} bestScore={bestScore} />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
-        {characters.map((character) => (
-          <Card key={character.id} character={character} onClick={handleCardClick} />
-        ))}
-      </div>
+      <GameBoard
+        characters={characters}
+        onCardClick={handleCardClick}
+        isShuffling={isShuffling}
+      />
       {gameStatus !== 'playing' && (
         <GameOverlay
           gameStatus={gameStatus}
