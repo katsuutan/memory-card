@@ -1,6 +1,6 @@
 import '../styles/Header.css';
 
-function Header({ currentScore, bestScore }) {
+function Header({ currentScore, bestScore, onShowInstructions }) {
   return (
     <header className="header">
       <div className="header-title">
@@ -15,6 +15,7 @@ function Header({ currentScore, bestScore }) {
           <p>Best Score: <span>{bestScore}</span></p>
         </div>
       </div>
+      <button className="instructions-btn" onClick={onShowInstructions}>?</button>
     </header>
   );
 }

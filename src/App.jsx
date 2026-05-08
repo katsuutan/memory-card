@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import GameBoard from './components/GameBoard';
 import GameOverlay from './components/GameOverlay';
+import Instructions from './components/Instructions';
 import './index.css';
 
 const CHARACTER_IDS = [4536, 5485, 4879, 5360, 5191, 7426, 7520, 5100, 5179, 5574, 4891, 4915];
@@ -14,6 +15,8 @@ function App() {
   const [gameStatus, setGameStatus] = useState('playing');
   const [isShuffling, setIsShuffling] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -24,6 +27,7 @@ function App() {
         )
       );
       setCharacters(results);
+      setIsLoading(false);
     };
 
     fetchCharacters();
@@ -69,13 +73,29 @@ function App() {
 
   return (
     <div className='app'>
-      <Header currentScore={currentScore} bestScore={bestScore} />
-      <GameBoard
-        characters={characters}
-        onCardClick={handleCardClick}
-        isShuffling={isShuffling}
-        isWrong={isWrong}
+      <Header
+        currentScore={currentScore}
+        bestScore={bestScore}
+        onShowInstructions={() => setShowInstructions(true)}
       />
+
+      {showInstructions && (
+        <Instructions onClose={() => setShowInstructions(false)} />
+      )}
+
+      {isLoading ? (
+        <div className="loading">
+          <p>Loading characters...</p>
+        </div>
+      ) : (
+        <GameBoard
+          characters={characters}
+          onCardClick={handleCardClick}
+          isShuffling={isShuffling}
+          isWrong={isWrong}
+        />
+      )}
+
       {gameStatus !== 'playing' && (
         <GameOverlay
           gameStatus={gameStatus}
